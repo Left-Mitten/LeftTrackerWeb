@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore congressional voting records, find lawmakers, and see how members voted on bills.">
+    <title>Congressional Democrat Left Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body data-page="home">
+    <header class="masthead">
+      <div class="masthead-inner">
+        <a class="wordmark" href="./">CDLT <span>Congressional Democrat Left Tracker</span></a>
+        <p class="eyebrow">Follow the record</p>
+        <h1>How Congress<br>shows up on the issues.</h1>
+        <p class="intro">Explore lawmakers’ records on bills and resolutions. Start with a person to see their votes and sponsorships, or open a bill to see how lawmakers responded.</p>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="overview" aria-label="Tracker overview">
+        <div><strong id="member-total">—</strong><span>lawmakers tracked</span></div>
+        <div><strong id="bill-total">—</strong><span>bills and resolutions</span></div>
+        <div><strong id="vote-total">—</strong><span>recorded responses</span></div>
+        <p id="updated-at">Loading the latest records…</p>
+      </section>
+
+      <section class="directory">
+        <div class="directory-heading">
+          <div>
+            <p class="eyebrow">Explore the data</p>
+            <h2>Find a person or a bill</h2>
+          </div>
+          <a class="source-link" href="https://docs.google.com/spreadsheets/d/1gPBdBrqVCbtuy7f1bjOdCDUzEv5RqbbU1yYAr3KoHYE" target="_blank" rel="noopener noreferrer">About this data <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="directory-controls">
+          <div class="switcher" role="tablist" aria-label="Browse records">
+            <button type="button" class="switcher-tab" id="people-tab" role="tab" aria-controls="directory-list" aria-selected="true">People</button>
+            <button type="button" class="switcher-tab" id="bills-tab" role="tab" aria-controls="directory-list" aria-selected="false">Bills &amp; resolutions</button>
+          </div>
+          <div class="filters">
+            <label class="sr-only" for="congress-filter">Congress</label>
+            <select id="congress-filter" aria-label="Filter by Congress" disabled></select>
+            <label class="sr-only" for="directory-search">Search people and bills</label>
+            <input id="directory-search" type="search" placeholder="Search by name, bill, or issue…" autocomplete="off" disabled>
+          </div>
+        </div>
+
+        <div id="directory-order" class="order-controls" aria-label="Order results"></div>
+        <p id="directory-summary" class="directory-summary"></p>
+        <div id="directory-list" class="record-list" role="tabpanel" aria-labelledby="people-tab">
+          <p class="message">Loading the latest records…</p>
+        </div>
+        <div id="directory-navigation" class="table-navigation" hidden></div>
+      </section>
+
+      <footer>
+        <p>Data is updated daily from the source spreadsheet. Scores and vote labels reflect the spreadsheet’s methodology.</p>
+        <a href="https://docs.google.com/spreadsheets/d/1gPBdBrqVCbtuy7f1bjOdCDUzEv5RqbbU1yYAr3KoHYE" target="_blank" rel="noopener noreferrer">Open the source spreadsheet <span aria-hidden="true">↗</span></a>
+      </footer>
+    </main>
+  </body>
+</html>
