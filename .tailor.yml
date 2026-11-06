@@ -1,18 +1,13 @@
-# Initially fitted by tailor on 2026-11-06
+# Tailor repository settings for the Congressional Democrat Left Tracker website.
 license: BlueOak-1.0.0
 
 languages:
   go: false
   rust: false
-  python: false
-
-# Model Context Protocol integrations are opt-in.
-mcp:
-  blender: false
-  playwright: false
+  python: true
 
 repository:
-  description: LeftTrackerWeb
+  description: Search congressional bill sponsorship and voting records by lawmaker and bill.
   has_wiki: false
   has_discussions: false
   has_projects: false
@@ -132,72 +127,45 @@ pages:
   generator: static
   path: pages
   links: {}
-  # branch: main
-  # cname: www.example.com
-  # Static only. Omit links to leave the page unchanged; {} clears its marked links.
-  # Use full HTTPS URLs, or a bare address for email. Empty values add no icon.
-  # links:
-  #   website: https://example.com
-  #   email: hello@example.com
 
 labels:
   - name: bug
     color: d20f39
-    description: "Something isn't working"
+    description: A problem with the site, data display, or publishing workflow.
 
   - name: documentation
     color: 04a5e5
-    description: Documentation improvement
-
-  - name: duplicate
-    color: 8839ef
-    description: Already exists
+    description: Improve project or site documentation.
 
   - name: enhancement
     color: 1e66f5
-    description: New feature request
-
-  - name: good first issue
-    color: 40a02b
-    description: Good for newcomers
-
-  - name: help wanted
-    color: "179299"
-    description: Extra attention needed
-
-  - name: invalid
-    color: e64553
-    description: Not valid or relevant
+    description: Improve how visitors browse lawmakers, bills, or voting records.
 
   - name: question
     color: 7287fd
-    description: Needs more information
-
-  - name: wontfix
-    color: dc8a78
-    description: Will not be worked on
+    description: A question about the site or its data.
 
   - name: dependencies
     color: fe640b
-    description: Dependency update
+    description: Update a GitHub Actions or Python dependency.
 
-  - name: github_actions
-    color: ea76cb
-    description: GitHub Actions update
-
-  - name: hacktoberfest-accepted
-    color: df8e1d
-    description: Hacktoberfest contribution
-
-# Repository Actions variables are non-secret values.
-# Tailor creates or updates only declared variables and leaves others unchanged.
-# variables:
-#   - name: DEPLOY_REGION
-#     value: "eu-west-2"
-#   - name: RELEASE_SUFFIX
-#     value: ""
+  - name: data issue
+    color: "b5e3d8"
+    description: A possible discrepancy in the source spreadsheet or generated records.
 
 swatches:
+  - path: README.md
+    alteration: always
+
+  - path: CONTRIBUTING.md
+    alteration: always
+
+  - path: SECURITY.md
+    alteration: always
+
+  - path: SUPPORT.md
+    alteration: always
+
   - path: .github/dependabot.yml
     alteration: first-fit
 
@@ -213,32 +181,20 @@ swatches:
   - path: .github/ISSUE_TEMPLATE/config.yml
     alteration: first-fit
 
-  - path: .github/pull_request_template.md
-    alteration: never
-
-  - path: SECURITY.md
-    alteration: always
-
   - path: CODE_OF_CONDUCT.md
     alteration: always
-
-  - path: CONTRIBUTING.md
-    alteration: always
-
-  - path: SUPPORT.md
-    alteration: always
-
-  - path: justfile
-    alteration: first-fit
 
   - path: .gitignore
     alteration: first-fit
 
-  - path: cubic.yaml
+  - path: .github/workflows/publish-pages.yml
+    alteration: always
+
+  - path: requirements.txt
     alteration: first-fit
 
-  - path: .github/workflows/tailor-pages.yml
-    alteration: always
+  - path: scripts/build_data.py
+    alteration: first-fit
 
   - path: pages/index.html
     alteration: first-fit
@@ -254,18 +210,6 @@ swatches:
 
   - path: pages/app.js
     alteration: first-fit
-
-  - path: wiki/Home.md
-    alteration: first-fit
-
-  - path: wiki/_Sidebar.md
-    alteration: first-fit
-
-  - path: wiki/_Footer.md
-    alteration: first-fit
-
-  - path: .github/workflows/tailor-wiki.yml
-    alteration: always
 
   - path: .tailor.yml
     alteration: always

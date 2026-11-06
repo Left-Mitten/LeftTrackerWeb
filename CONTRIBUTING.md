@@ -1,23 +1,32 @@
 # Contributing
 
-Contributions are welcome and appreciated.
+Contributions to the website and its build script are welcome.
 
-- **Report bugs and request features** in [Issues](../../issues)
-- **Submit pull requests** to fix bugs or add new features
-- Commit messages must conform to the [Conventional Commits](https://www.conventionalcommits.org/) specification
-- **Improve documentation** directly via pull requests
-- All contributors are expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md)
-- Security issues must be reported privately; see [SECURITY.md](SECURITY.md)
-- By contributing, you confirm that you have the right to license your contribution under the project [licence](LICENSE)
+## Development
 
-## AI-assisted contributions
+The site has no JavaScript package dependencies. The build script requires Python 3.12 or newer and the packages in [`requirements.txt`](requirements.txt).
 
-You may use AI assistance for code, documentation, and GitHub communication. Every contribution must have a responsible person in the loop who reviews and understands it before submission and remains accountable for it.
+```sh
+python3 -m pip install -r requirements.txt
+curl --fail --location \
+  "https://docs.google.com/spreadsheets/d/1gPBdBrqVCbtuy7f1bjOdCDUzEv5RqbbU1yYAr3KoHYE/export?format=xlsx" \
+  --output /tmp/tracker.xlsx
+python3 scripts/build_data.py /tmp/tracker.xlsx pages/data.json
+python3 -m http.server 8000 --directory pages
+```
 
-- AI-assisted contributions must meet the same project standards as other contributions.
-- Check AI-assisted material for licence and attribution requirements before submission.
-- AI tools may assist reviews, but a person must make the final decision.
-- Answer questions about your contribution and respond to feedback yourself, without relaying messages between reviewers and AI tools.
-- Do not add an AI identity to `Signed-off-by` or `Co-authored-by` trailers. `Signed-off-by` is a commit trailer for a person who makes the stated certification.
-- You may disclose material AI assistance with an `Assisted-by:` trailer, for example `Assisted-by: tool:model`.
-- Routine tools for grammar, spelling, or language clarity do not need disclosure.
+Use the local site to verify your change. For changes to data generation, check that people link to their bills, bills link to people, and workbook-provided bill URLs are preserved. `pages/data.json` is generated locally and should not be committed.
+
+The production workflow reads the live, public Google Sheets export; the checked-in workbook copies under `data/` are not used in deployment. To correct source data, update the spreadsheet rather than editing generated site data.
+
+## Pull requests
+
+- Keep changes focused and describe the user-facing result.
+- Include steps to verify UI or data-builder changes.
+- Preserve accessible labels, keyboard-operable controls, and safe external links.
+- Follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+- The repository code is licensed under the [Blue Oak Model License](LICENSE). Contributions are submitted under that license; source spreadsheet terms may differ.
+
+## Security
+
+Do not include credentials, private spreadsheet data, or sensitive personal information in code or issues. Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).

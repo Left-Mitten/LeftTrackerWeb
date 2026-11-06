@@ -1,14 +1,20 @@
 # Congressional Democrat Left Tracker
 
-A static information site for the Congressional Democrat Left Tracker. Browse lawmakers and bills, open a lawmaker’s profile to see their recorded responses, and open a bill to see how lawmakers responded. GitHub Actions downloads the current Google Sheets workbook, builds a normalized set of linked records, and publishes the site to GitHub Pages.
+A searchable information site for congressional bill sponsorship and voting records. Browse lawmakers by left score, open a lawmaker profile to see their responses, or open a bill to see who sponsored or voted on it. Where the spreadsheet provides a source link, the site links to the original bill.
 
-## Publishing
+The site is static and is published with GitHub Pages. GitHub Actions fetches the latest workbook from [Google Sheets](https://docs.google.com/spreadsheets/d/1gPBdBrqVCbtuy7f1bjOdCDUzEv5RqbbU1yYAr3KoHYE), builds linked people and bill records, and publishes them every day at 07:13 UTC (and on pushes or manual runs).
 
-The workflow at `.github/workflows/publish-pages.yml` runs when changes are pushed, can be started manually, and runs daily at 07:13 UTC. The Google Sheets ID is configured in the workflow. The spreadsheet must allow the GitHub Actions runner to download its XLSX export without signing in (for example, share it as **Anyone with the link — Viewer**).
+## Data source and deployment
 
-In the repository's **Settings → Pages**, select **GitHub Actions** as the build and deployment source. The home page defaults to the latest Congress, with people ordered by left score from highest to lowest, and supports browsing or searching people and bills. Sort buttons also let visitors reorder directory and detail-page lists. Person and bill records link to each other. When a bill title has a source hyperlink in the workbook, the generated record keeps it and the site provides a link to open the original bill. Duplicate bill columns across historical sheets are combined using the vote date, chamber, and title.
+The workflow downloads the workbook's XLSX export without authentication. The Google Sheet must therefore be shared so that anyone with the link can view and download it. Do not add credentials or private data to the site.
 
-## Build locally
+To enable deployment, open the repository's **Settings → Pages** and select **GitHub Actions** as the source. Check the `Build and publish website` workflow under **Actions** to see build and deployment status.
+
+The generated `pages/data.json` is intentionally ignored by Git: it is built from the live workbook during each workflow run. Spreadsheet source exports in `data/` are local reference copies and are not used by the production build.
+
+## Build and preview locally
+
+Requirements: Python 3.12 or newer and access to the public Google Sheets XLSX export.
 
 ```sh
 python3 -m pip install -r requirements.txt
@@ -16,6 +22,17 @@ curl --fail --location \
   "https://docs.google.com/spreadsheets/d/1gPBdBrqVCbtuy7f1bjOdCDUzEv5RqbbU1yYAr3KoHYE/export?format=xlsx" \
   --output /tmp/tracker.xlsx
 python3 scripts/build_data.py /tmp/tracker.xlsx pages/data.json
+python3 -m http.server 8000 --directory pages
 ```
 
-Serve the `pages` directory with a local HTTP server to preview the site; opening `index.html` directly does not load its generated JSON.
+Open [http://localhost:8000](http://localhost:8000). The site uses `fetch()` to load its generated data, so it must be served over HTTP rather than opened directly as a file.
+
+The data builder carries bill-title hyperlinks through to bill records, combines matching records across sheets using chamber, date, and title, and records vote/sponsorship responses for each lawmaker.
+
+## Contributing and support
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local development and pull request guidance. For help or known limitations, see [SUPPORT.md](SUPPORT.md). Report security concerns privately as described in [SECURITY.md](SECURITY.md).
+
+## License and data attribution
+
+The code in this repository is licensed under the [Blue Oak Model License 1.0.0](LICENSE). The upstream spreadsheet and its contents are maintained by their respective authors; check the source sheet for attribution and reuse terms.
